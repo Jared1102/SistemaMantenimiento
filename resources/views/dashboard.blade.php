@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('container')
-    <div class="container mt-5">
+    <div class="container mt-5 p-3 dashboard bg-light">
         <h1 class="text-center mb-4">Mantenimientos proximos</h1>
+        @if (count($mantenimientos)>0)
         <table class="table table-bordered table-responsive table-striped">
+            <caption>Mantenimientos</caption>
             <tr class="table-primary">
                 <th>Rutina</th>
                 <th>Vehiculo</th>
@@ -34,5 +36,9 @@
                 
             @endforeach
         </table>
+        @else
+            <p class="text-center">No hay mantenimientos pendientes. <a href="{{route('MantenimientosIndex')}}">Programe un mantenimiento.</a></p>
+        @endif
+        
     </div>
 @endsection

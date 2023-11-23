@@ -11,7 +11,7 @@
         <script type="module" src="http://localhost:8000/build/assets/app-14070805.js"></script>
         @vite(['resources/js/app.js'])
     </head>
-    <body>
+    <body style="background-image: url({{Vite::asset('resources/img/bienvenida.jpg')}})">
         @include('partials.navegacion')
         @if (session('status'))
             <div class="container mt-3" id="statusMessage">

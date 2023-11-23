@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('container')
+<div class="container mt-5 w-75 rounded p-3 bg-light">
     <h1 class="text-center">Editar Mantenimiento</h1>
-    <div class="container w-75">
+    <div class="container">
         <form action="{{route('MantenimientosUpdate', $mantenimiento->id)}}" method="POST">
             @csrf @method('PATCH')
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="rutina" class="form-label">Rutina de Mantenimiento</label>
                 <select name="rutina" class="form-select">
                     @foreach ($rutinas as $rutina)
@@ -17,10 +18,10 @@
                     @endforeach
                 </select>
                 @error('rutina')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="vehiculo" class="form-label">Vehículo</label>
                 <select name="vehiculo" class="form-select">
                     @foreach ($vehiculos as $vehiculo)
@@ -30,20 +31,21 @@
                     @endforeach
                 </select>
                 @error('vehiculo')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="fecha" class="form-label">Nombre</label>
                 <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $mantenimiento->fecha)}}">
                 @error('fecha')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{$message}}</div>
                 @enderror
             </div>
-            <div class="form-group mt-2">
+            <div class="mb-3 mt-2 d-flex justify-content-evenly">
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <a href="{{route('MantenimientosIndex')}}" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>
+</div>
 @endsection

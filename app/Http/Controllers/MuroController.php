@@ -20,31 +20,33 @@ class MuroController extends Controller
     public function index()
     {
         //Enviar al correo
-        
         $fechaActual = Carbon::now()->timezone('America/Mexico_City')->startOfDay();
         $mantenimientos=Mantenimiento::with('rutina','vehiculo')
             ->whereDate('fecha','>=',$fechaActual->toDateString())
             ->orderBy('fecha','asc')->get();
-        $mantenimientos = $mantenimientos->map(function ($mantenimiento) use ($fechaActual) {
-            $fechaActual = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
-            $fechaActual->setTime(0,0,0);
-            $fechaMantenimiento = new \DateTime($mantenimiento->fecha);
-            // Calcula la diferencia en días
-            $interval = $fechaActual->diff($fechaMantenimiento);
-            $diasFaltantes = max(0, $interval->days);
-
-            $mantenimiento->diasFaltantes = $diasFaltantes;
-            return $mantenimiento;
-        });
-
-        $mantenimientosProximos = $mantenimientos->filter(function ($mantenimiento) {
-            return $mantenimiento->diasFaltantes <= 28;
-        });
-
-        $usuarios=User::all();
-        foreach ($usuarios as $usuario) {
-            Mail::to($usuario->email)->send(new MantenimientosProximosMail($mantenimientosProximos));
+        if(count($mantenimientos)>0){
+            $mantenimientos = $mantenimientos->map(function ($mantenimiento) use ($fechaActual) {
+                $fechaActual = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
+                $fechaActual->setTime(0,0,0);
+                $fechaMantenimiento = new \DateTime($mantenimiento->fecha);
+                // Calcula la diferencia en días
+                $interval = $fechaActual->diff($fechaMantenimiento);
+                $diasFaltantes = max(0, $interval->days);
+    
+                $mantenimiento->diasFaltantes = $diasFaltantes;
+                return $mantenimiento;
+            });
+    
+            $mantenimientosProximos = $mantenimientos->filter(function ($mantenimiento) {
+                return $mantenimiento->diasFaltantes <= 28;
+            });
+    
+            $usuarios=User::all();
+            foreach ($usuarios as $usuario) {
+                Mail::to($usuario->email)->send(new MantenimientosProximosMail($mantenimientosProximos));
+            }
         }
+        
         
         //Mostrar en el dashboard
         $fechaActual = Carbon::now()->timezone('America/Mexico_City')->startOfDay();

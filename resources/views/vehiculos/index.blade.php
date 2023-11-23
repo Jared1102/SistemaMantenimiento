@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('container')
-    <h1 class="text-center mt-5">Vehículos
+<div class="container mt-5 p-3 dashboard bg-light">
+    <h1 class="text-center">Vehículos
     </h1>
     <div class="container-fluid d-flex justify-content-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
@@ -56,6 +57,8 @@
         </table>
         {{$vehiculos->links('pagination::bootstrap-5')}}
     </div>
+</div>
+    
 @endsection
 
 @section('js')

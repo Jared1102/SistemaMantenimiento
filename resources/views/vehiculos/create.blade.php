@@ -1,42 +1,45 @@
 @extends('layouts.app')
 
 @section('container')
+<div class="container mt-5 w-75 rounded p-3 bg-light">
     <h1 class="text-center">Nuevo Vehículo</h1>
-    <div class="container w-75">
-        <form action="{{route('VehiculosStore')}}" method="POST">
+    <div class="container">
+        <form action="{{ route('VehiculosStore') }}" method="POST">
             @csrf
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="marca" class="form-label">Marca</label>
-                <input type="text" name="marca" id="marca" class="form-control" value="{{old('marca')}}">
+                <input type="text" name="marca" id="marca" class="form-control @error('marca') is-invalid @enderror" value="{{ old('marca') }}">
                 @error('marca')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="modelo" class="form-label">Modelo</label>
-                <input type="text" name="modelo" id="modelo" class="form-control" value="{{old('modelo')}}">
+                <input type="text" name="modelo" id="modelo" class="form-control @error('modelo') is-invalid @enderror" value="{{ old('modelo') }}">
                 @error('modelo')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="anio" class="form-label">Año</label>
-                <input type="text" name="anio" id="anio" class="form-control" value="{{old('anio')}}">
+                <input type="text" name="anio" id="anio" class="form-control @error('anio') is-invalid @enderror" value="{{ old('anio') }}">
                 @error('anio')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="placas" class="form-label">Placas</label>
-                <input type="text" name="placas" id="placas" class="form-control" value="{{old('placas')}}">
+                <input type="text" name="placas" id="placas" class="form-control @error('placas') is-invalid @enderror" value="{{ old('placas') }}">
                 @error('placas')
-                    <div style="color:red">{{$message}}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group mt-2">
+            <div class="mb-3 d-flex justify-content-evenly">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="{{route('VehiculosIndex')}}" class="btn btn-danger">Cancelar</a>
+                <a href="{{ route('VehiculosIndex') }}" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>
+</div>
+
 @endsection
